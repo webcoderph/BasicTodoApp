@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Todo } from "./Todo";
-
+import TodoProvider from "./context/TodoContext";
 const App: FC = () => {
   return (
     <div className="bg-gray-200">
@@ -12,7 +12,9 @@ const App: FC = () => {
       </div>
 
       <div className="container mx-auto w-full h-screen">
-        <Todo />
+        <TodoProvider>
+          <Todo />
+        </TodoProvider>
       </div>
     </div>
   );
