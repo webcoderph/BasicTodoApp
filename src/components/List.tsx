@@ -1,15 +1,14 @@
-import { FC } from "react";
-import { tTodo } from "../types";
+import { FC, useContext } from "react";
+import { tTodoContext } from "../types";
+import { TodoListContext } from "../context/TodoContext";
 
-export const List: FC<{
-  list: tTodo[];
-  handleCheckbox: (index: number, data: tTodo) => void;
-  handleDelete: (key: string) => void;
-  handleEditClick: (key: string) => void;
-}> = ({ list, handleCheckbox, handleDelete, handleEditClick }) => {
+export const List: FC = () => {
+  const { handleCheckbox, items, handleEditClick, handleDelete } = useContext(
+    TodoListContext,
+  ) as tTodoContext;
   return (
     <ul style={{ listStyleType: "none", marginTop: "20px" }}>
-      {list.map((item, index) => (
+      {items.map((item, index) => (
         <li
           key={index}
           className={
@@ -23,7 +22,7 @@ export const List: FC<{
             type="checkbox"
             checked={!!item.done}
             onChange={(e) =>
-              handleCheckbox(index, { ...item, done: e.target.checked })
+              handleCheckbox(item.id, { ...item, done: e.target.checked })
             }
           />{" "}
           {item.title}
@@ -43,7 +42,7 @@ export const List: FC<{
                 </svg>
               </button>
               <button
-                onClick={() => handleDelete(item.title)}
+                onClick={() => handleDelete(item.id)}
                 className="h-10  text-white rounded-lg bg-red-500 w-10 mr-2"
               >
                 -

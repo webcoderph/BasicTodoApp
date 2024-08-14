@@ -5,14 +5,15 @@ import {
   FC,
   ReactNode,
   useEffect,
+  useReducer,
 } from "react";
 import { tTodo, tTodoContext } from "../types";
 import { v4 as uuidv4 } from "uuid";
-
+import { todoReducer } from "../reducers/todoReducer";
 export const TodoListContext = createContext<tTodoContext | null>(null);
 
 const TodoProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [items, setItems] = useState<tTodo[]>([]);
+  const [items, dispatch] = useReducer(todoReducer, []);
   const [todo, setTodo] = useState<string>("");
   const [id, setId] = useState<string>("");
   const [isEdit, setEdit] = useState<boolean>(false);
@@ -20,9 +21,9 @@ const TodoProvider: FC<{ children: ReactNode }> = ({ children }) => {
   useEffect(() => {
     const storedTodos = JSON.parse(localStorage.getItem("todos") ?? "[]");
     console.log(">>>INITIALIZE");
-    if (storedTodos) {
+    if (storedTodos && storedTodos.length > 0) {
       console.log(">>>SET ITEMS");
-      setItems(storedTodos);
+      dispatch({ type: "INIT", payload: storedTodos });
     }
   }, []);
 
@@ -37,22 +38,15 @@ const TodoProvider: FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   const handleDelete = (key: string): void => {
-    setItems(items.filter((item) => item.title !== key));
+    dispatch({ type: "DELETE_TODO", payload: key });
     localStorage.setItem(
       "todos",
-      JSON.stringify(items.filter((item) => item.title !== key)),
+      JSON.stringify(items.filter((item) => item.id !== key)),
     );
   };
 
-  const handleCheckbox = (index: number, updateTodo: tTodo) => {
-    setItems(
-      items
-        .map((item: tTodo, i: number) => {
-          if (i == index) return updateTodo;
-          else return item;
-        })
-        .sort((a, b) => (a.done === b.done ? 0 : a.done ? 1 : -1)),
-    );
+  const handleCheckbox = (id: string, updateTodo: tTodo) => {
+    dispatch({ type: "UPDATE_TODO", payload: { id, updateTodo } });
   };
 
   const handleEditClick = (key: string): void => {
@@ -70,14 +64,7 @@ const TodoProvider: FC<{ children: ReactNode }> = ({ children }) => {
       const selected = items.find((item) => item.id === id);
       if (selected) {
         const updateTodo: tTodo = { ...selected, title: todo };
-        setItems(
-          items
-            .map((item: tTodo) => {
-              if (item.id === id) return updateTodo;
-              else return item;
-            })
-            .sort((a, b) => (a.done === b.done ? 0 : a.done ? 1 : -1)),
-        );
+        dispatch({ type: "UPDATE_TODO", payload: { id, updateTodo } });
 
         setTodo("");
         setEdit(false);
@@ -92,7 +79,7 @@ const TodoProvider: FC<{ children: ReactNode }> = ({ children }) => {
       createdAt: new Date().toISOString(),
     };
 
-    setItems([...items, newTodo]);
+    dispatch({ type: "ADD_TODO", payload: newTodo });
     setTodo("");
   };
 

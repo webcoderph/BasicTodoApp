@@ -12,7 +12,13 @@ export type tTodoContext = {
   isEdit: boolean;
   handleChange: (key: ChangeEvent<HTMLInputElement>) => void;
   handleDelete: (key: string) => void;
-  handleCheckbox: (index: number, updatTodo: tTodo) => void;
+  handleCheckbox: (id: string, updatTodo: tTodo) => void;
   handleEditClick: (key: string) => void;
   handleSave: () => void;
 };
+
+export type tAction =
+  | { type: "ADD_TODO"; payload: tTodo }
+  | { type: "UPDATE_TODO"; payload: { id: string; updateTodo: tTodo } }
+  | { type: "DELETE_TODO"; payload: string }
+  | { type: "INIT"; payload: tTodo[] };

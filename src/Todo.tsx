@@ -3,16 +3,9 @@ import { tTodoContext } from "./types/index";
 import { List } from "./components/List";
 import { TodoListContext } from "./context/TodoContext";
 export const Todo = () => {
-  const {
-    handleCheckbox,
-    handleChange,
-    items,
-    todo,
-    handleEditClick,
-    handleDelete,
-    handleSave,
-    isEdit,
-  } = useContext(TodoListContext) as tTodoContext;
+  const { handleChange, todo, handleSave, isEdit } = useContext(
+    TodoListContext,
+  ) as tTodoContext;
   return (
     <>
       <div className="flex justify-center">
@@ -38,12 +31,7 @@ export const Todo = () => {
       </div>
       <div style={{ clear: "both" }}></div>
       <div className="flex justify-center">
-        <List
-          list={items}
-          handleDelete={handleDelete}
-          handleCheckbox={handleCheckbox}
-          handleEditClick={handleEditClick}
-        />
+        <List />
       </div>
     </>
   );
