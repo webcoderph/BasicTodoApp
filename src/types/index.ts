@@ -2,7 +2,7 @@ import { ChangeEvent } from "react";
 export type tTodo = {
   id: string;
   title: string;
-  done: Boolean;
+  done: boolean;
   createdAt: string;
 };
 

@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { FC, useContext, MouseEvent } from "react";
 import { tTodoContext } from "../types";
 import { TodoListContext } from "../context/TodoContext";
 
@@ -6,11 +6,16 @@ export const List: FC = () => {
   const { handleCheckbox, items, handleEditClick, handleDelete } = useContext(
     TodoListContext,
   ) as tTodoContext;
+
+  const viewTodo = (e: MouseEvent) => {
+    console.log(e.target);
+  };
   return (
     <ul style={{ listStyleType: "none", marginTop: "20px" }}>
       {items.map((item, index) => (
         <li
           key={index}
+          onClick={(e) => viewTodo(e)}
           className={
             "p-4 w-96 relative rounded bg-white shadow-2xl mb-2 " +
             (item.done
@@ -25,7 +30,7 @@ export const List: FC = () => {
               handleCheckbox(item.id, { ...item, done: e.target.checked })
             }
           />{" "}
-          {item.title}
+          {item?.title?.substring(0, 30)}
           <div className="absolute inset-y-0 right-0 pt-2">
             <div className="flex">
               <button
