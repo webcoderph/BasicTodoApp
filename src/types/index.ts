@@ -6,11 +6,20 @@ export type tTodo = {
   createdAt: string;
 };
 
+export type tPomodoroContext = {
+  setWorkMinutes: (n: number) => void;
+  setBreakMinutes: (n: number) => void;
+  totalWorkMinutes: number;
+  totalBreakMinutes: number;
+  isWorkTime: boolean;
+  setWorkTime: (n: boolean) => void;
+};
+
 export type tTodoContext = {
   items: tTodo[];
   todo: string;
   isEdit: boolean;
-  handleChange: (key: ChangeEvent<HTMLInputElement>) => void;
+  handleChange: (key: ChangeEvent<HTMLTextAreaElement>) => void;
   handleDelete: (key: string) => void;
   handleCheckbox: (id: string, updatTodo: tTodo) => void;
   handleEditClick: (key: string) => void;

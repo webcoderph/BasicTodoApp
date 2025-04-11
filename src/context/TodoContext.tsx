@@ -33,7 +33,8 @@ const TodoProvider: FC<{ children: ReactNode }> = ({ children }) => {
     }
   }, [items]);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
+    if (todo.length > 25) return;
     setTodo(e.target.value);
   };
 
@@ -72,6 +73,7 @@ const TodoProvider: FC<{ children: ReactNode }> = ({ children }) => {
       }
       return;
     }
+
     const newTodo = {
       id: uuidv4(),
       title: todo,
