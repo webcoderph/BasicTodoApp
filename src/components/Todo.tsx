@@ -48,7 +48,7 @@ Todo.Button = () => {
 };
 
 Todo.Form = () => {
-  const { handleChange, todo, handleSave, isEdit } = useTodoContext();
+  const { todo, handleSave, isEdit } = useTodoContext();
 
   return (
     <div className="flex justify-center">
@@ -59,7 +59,6 @@ Todo.Form = () => {
         <input
           type="text"
           value={todo}
-          onChange={handleChange}
           maxLength={20}
           className="h-14 w-96 pl-10 pr-20 rounded-lg z-0 focus:shadow focus:outline-none"
         />
