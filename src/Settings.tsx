@@ -17,6 +17,16 @@ const Settings = () => {
     }
   }, []);
 
+  const handleWorkChange = (e: FormEvent<HTMLInputElement>) => {
+    if (isNaN(parseFloat(e.currentTarget.value))) return;
+    setWorkMins(+e.currentTarget.value);
+  };
+
+  const handleBreakChange = (e: FormEvent<HTMLInputElement>) => {
+    if (isNaN(parseFloat(e.currentTarget.value))) return;
+    setBreakMins(+e.currentTarget.value);
+  };
+
   const handleSave = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setInProgress(true);
@@ -34,10 +44,10 @@ const Settings = () => {
 
   return (
     <>
-      <div className="bg-grahy-200">
+      <div className="bg-gray-200">
         <Header />
-        <div className="container mx-auto w-full h-screen">
-          <h3 className="text-4xl font-bold mb-4">Settings</h3>
+        <div className="container mx-auto w-6/12 h-screen">
+          <h3 className="text-3xl font-bold mb-4 mt-4">Settings</h3>
           <form>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -45,9 +55,9 @@ const Settings = () => {
               </label>
               <input
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-                type="text"
+                type="number"
                 value={workMins}
-                onChange={(e) => setWorkMins(+e.target.value)}
+                onChange={handleWorkChange}
               />
             </div>
             <div className="mb-4">
@@ -56,9 +66,9 @@ const Settings = () => {
               </label>
               <input
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-                type="text"
+                type="number"
                 value={breakMins}
-                onChange={(e) => setBreakMins(+e.target.value)}
+                onChange={handleBreakChange}
               />
             </div>
 

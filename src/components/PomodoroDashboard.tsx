@@ -58,7 +58,7 @@ const PomodoroDashboard = () => {
     <div className="bg-grahy-200">
       <Header />
       <div className="container mx-auto w-full h-screen">
-        <h1 className="text-2xl  text-center font-bold mb-5 mt-5">Pomodoro</h1>
+        <h1 className="text-3xl text-center font-bold mb-5 mt-5">Pomodoro</h1>
         <div className="flex justify-center mb-5">
           <div className="text-6xl font-bold w-24">{`${minutes}`}:</div>
           <div className="text-6xl font-bold w-24">{`${seconds}`}</div>

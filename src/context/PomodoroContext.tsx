@@ -4,8 +4,8 @@ import { tPomodoroContext } from "../types";
 export const PomodoroContext = createContext<tPomodoroContext | null>(null);
 
 export const PomodorProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [totalWorkMinutes, setWorkMinutes] = useState(0);
-  const [totalBreakMinutes, setBreakMinutes] = useState(0);
+  const [totalWorkMinutes, setWorkMinutes] = useState(25);
+  const [totalBreakMinutes, setBreakMinutes] = useState(5);
   const [isWorkTime, setWorkTime] = useState(true);
 
   useEffect(() => {
